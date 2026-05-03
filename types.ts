@@ -10,6 +10,8 @@ export interface Post {
   authorId: string;
   likes: string[];
   dislikes: string[];
+  commentsCount?: number;
+  popularity?: number;
 }
 
 export interface Comment {
