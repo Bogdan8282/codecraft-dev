@@ -4,6 +4,9 @@ import { useParams, Link } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
 import type { Comment, Post } from "../types";
 import { useUser } from "@clerk/clerk-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import "./Post.css"
 
 const SinglePost: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,7 +19,7 @@ const SinglePost: React.FC = () => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState("");
   const [loadingComments, setLoadingComments] = useState(false);
-  
+
   const { user } = useUser();
 
   useEffect(() => {
@@ -89,6 +92,7 @@ const SinglePost: React.FC = () => {
 
       setNewComment("");
       fetchComments();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       alert(err.response?.data?.message || "Не вдалося додати коментар");
     }
@@ -99,11 +103,14 @@ const SinglePost: React.FC = () => {
     if (!isSignedIn) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/posts/comment/${commentId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      await axios.delete(
+        `http://localhost:5000/api/posts/comment/${commentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
       fetchComments();
     } catch (err) {
@@ -137,10 +144,10 @@ const SinglePost: React.FC = () => {
         <span className="font-medium">{post.author.name}</span>
       </div>
 
-      <div className="prose text-lg leading-relaxed mb-8">
-        {post.content.split("\n").map((paragraph, i) => (
-          <p key={i}>{paragraph}</p>
-        ))}
+      <div className="prose max-w-none text-lg leading-relaxed mb-8">
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {post.content}
+        </ReactMarkdown>
       </div>
 
       <div className="flex items-center gap-4 pt-6 border-t">

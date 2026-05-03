@@ -15,7 +15,7 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="w-full mx-auto p-6">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-4xl font-bold">Блог</h1>
         <SignedIn>
@@ -30,7 +30,7 @@ const Home: React.FC = () => {
 
       <div className="space-y-8">
         {posts.map((post) => (
-          <div key={post._id} className="border-b pb-8">
+          <div key={post._id} className="border-b pb-8 max-w-80">
             <Link to={`/post/${post._id}`}>
               <h2 className="text-2xl font-semibold hover:text-blue-600">
                 {post.title}
@@ -48,7 +48,7 @@ const Home: React.FC = () => {
                 alt="avatar"
                 className="w-6 h-6 rounded-full"
               />
-              <span className="text-sm text-gray-600">{post.author.name}</span>
+              <span className="text-sm text-gray-500">{post.author.name}</span>
             </div>
             <Link
               to={`/post/${post._id}`}

@@ -27,27 +27,27 @@ export default function Header() {
 
   if (!isLoaded) {
     return (
-      <header className="border-b bg-white">
+      <header className="border-b">
         <div className="max-w-7xl mx-auto px-6 py-4">Завантаження...</div>
       </header>
     );
   }
 
   return (
-    <header className="border-b bg-white">
+    <header className="border-b">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <div className="font-bold text-xl">CodeCraft</div>
 
         <div className="flex items-center gap-4">
           <SignedOut>
             <SignInButton mode="modal">
-              <button className="px-5 py-2 text-sm font-medium border rounded-lg hover:bg-gray-50">
+              <button className="px-5 py-2 text-sm font-medium border rounded-lg hover:bg-gray-800">
                 Увійти
               </button>
             </SignInButton>
 
             <SignUpButton mode="modal">
-              <button className="px-5 py-2 text-sm font-medium bg-black text-white rounded-lg hover:bg-gray-800">
+              <button className="px-5 py-2 text-sm font-medium bg-white text-black rounded-lg hover:bg-gray-300">
                 Зареєструватися
               </button>
             </SignUpButton>
@@ -57,17 +57,17 @@ export default function Header() {
             <div className="relative" ref={menuRef}>
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-gray-100 transition-all"
+                className="flex items-center gap-3 p-1.5 rounded-xl hover:bg-gray-700 transition-all"
               >
                 <img
                   src={user?.imageUrl}
                   alt={user?.fullName || "User"}
-                  className="w-9 h-9 rounded-full object-cover border border-gray-200"
+                  className="w-9 h-9 rounded-full object-cover border border-gray-700"
                 />
               </button>
 
               {isOpen && (
-                <div className="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-gray-200 py-2 z-50 overflow-hidden">
+                <div className="absolute right-0 mt-2 w-72 bg-gray-800 rounded-2xl shadow-xl border border-gray-700 py-2 z-50 overflow-hidden">
                   <div className="px-4 py-4 border-b flex gap-3">
                     <img
                       src={user?.imageUrl}
@@ -75,7 +75,7 @@ export default function Header() {
                       className="w-11 h-11 rounded-full"
                     />
                     <div className="min-w-0">
-                      <p className="font-semibold truncate">
+                      <p className="font-semibold truncate text-left">
                         {user?.fullName || user?.firstName || "Користувач"}
                       </p>
                       <p className="text-sm text-gray-500 truncate">
@@ -90,7 +90,7 @@ export default function Header() {
                         setIsOpen(false);
                         openUserProfile();
                       }}
-                      className="w-full text-left px-4 py-3 hover:bg-gray-100 flex items-center gap-3 text-sm"
+                      className="w-full text-left px-4 py-3 hover:bg-gray-700 flex items-center gap-3 text-sm"
                     >
                       Управління акаунтом
                     </button>
@@ -100,7 +100,7 @@ export default function Header() {
                         setIsOpen(false);
                         signOut({ redirectUrl: "/" });
                       }}
-                      className="w-full text-left px-4 py-3 hover:bg-gray-100 flex items-center gap-3 text-sm text-red-600"
+                      className="w-full text-left px-4 py-3 hover:bg-gray-700 flex items-center gap-3 text-sm text-red-600"
                     >
                       Вийти з акаунту
                     </button>
