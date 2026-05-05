@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import type { Post } from "../types";
 import { SignedIn } from "@clerk/clerk-react";
 
+import "./Home.css";
+
 const Home: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -46,11 +48,11 @@ const Home: React.FC = () => {
   return (
     <div className="w-full mx-auto p-6">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-bold">Блог</h1>
+        <h1 className="text-4xl font-bold"></h1>
         <SignedIn>
           <Link
             to="/post/create"
-            className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700"
+            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
           >
             + Написати пост
           </Link>
@@ -64,12 +66,12 @@ const Home: React.FC = () => {
             placeholder="Про що хочеш дізнатись..?"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 p-3 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 px-4 py-2 border rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <button
             type="submit"
             disabled={isSearching}
-            className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg text-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
           >
             {isSearching ? "Пошук..." : "Знайти"}
           </button>
@@ -77,7 +79,7 @@ const Home: React.FC = () => {
             <button
               type="button"
               onClick={handleReset}
-              className="bg-red-500 text-white px-6 py-3 rounded-lg text-lg hover:bg-red-600 transition-colors"
+              className="bg-red-500 text-white px-4 py-2 rounded-lg text-lg hover:bg-red-600 transition-colors"
             >
               X
             </button>
@@ -87,7 +89,7 @@ const Home: React.FC = () => {
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
-          className="p-3 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-800 text-white cursor-pointer"
+          className="px-2 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-800 text-white cursor-pointer"
         >
           <option value="newest">Найновіші</option>
           <option value="popular">Найпопулярніші</option>
@@ -95,39 +97,32 @@ const Home: React.FC = () => {
         </select>
       </div>
 
-      <div className="space-y-8">
+      <div className="card-container">
         {posts.length > 0
           ? posts.map((post) => (
-              <div key={post._id} className="border-b pb-8 max-w-80">
-                <Link to={`/post/${post._id}`}>
-                  <h2 className="text-2xl font-semibold hover:text-blue-600">
-                    {post.title}
-                  </h2>
-                </Link>
-                <p className="text-gray-500 text-sm mt-1">
-                  {new Date(post.createdAt).toLocaleDateString("uk-UA")}
-                </p>
-                <p className="mt-3 text-lg line-clamp-3">
-                  {post.content.substring(0, 280)}...
-                </p>
-                <div className="flex items-center gap-2 mt-2">
-                  <img
-                    src={post.author.avatar}
-                    alt="avatar"
-                    className="w-6 h-6 rounded-full"
-                  />
-                  <span className="text-sm text-gray-500">
-                    {post.author.name}
-                  </span>
+              <Link to={`/post/${post._id}`}>
+                <div key={post._id} className="card">
+                  <Link to={`/post/${post._id}`}>
+                    <h2 className="text-2xl font-semibold">{post.title}</h2>
+                  </Link>
+                  <p className="text-md line-clamp-3">
+                    {post.content.substring(0, 280)}...
+                  </p>
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={post.author.avatar}
+                        alt="avatar"
+                        className="w-6 h-6 rounded-full"
+                      />
+                      <span className="text-sm">{post.author.name}</span>
+                    </div>
+                    <p className="text-sm">
+                      {new Date(post.createdAt).toLocaleDateString("uk-UA")}
+                    </p>
+                  </div>
                 </div>
-                
-                <Link
-                  to={`/post/${post._id}`}
-                  className="inline-block mt-4 text-blue-600 hover:underline"
-                >
-                  Читати повністю →
-                </Link>
-              </div>
+              </Link>
             ))
           : "За вашим запитом нічого не знайдено..."}
       </div>

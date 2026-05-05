@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --text: #6b6375;
+  --text: #494352;
   --text-h: #08060d;
   --bg: #fff;
   --border: #e5e4e7;
@@ -53,7 +53,7 @@
 }
 
 #root {
-  width: 1126px;
+  width: 1200px;
   max-width: 100%;
   margin: 0 auto;
   text-align: center;
@@ -78,17 +78,16 @@ h2 {
 h1 {
   font-size: 56px;
   letter-spacing: -1.68px;
-  margin: 32px 0;
+  margin: 0;
   @media (max-width: 1024px) {
     font-size: 36px;
-    margin: 20px 0;
   }
 }
 h2 {
   font-size: 24px;
   line-height: 118%;
   letter-spacing: -0.24px;
-  margin: 0 0 8px;
+  margin: 0;
   @media (max-width: 1024px) {
     font-size: 20px;
   }
@@ -114,4 +113,12 @@ code {
 
 .cl-internal-1k7jtru, .cl-internal-1fpq5at {
   display: none;
+}
+
+button, a {
+  cursor: pointer;
+}
+
+.white-glow:hover {
+  box-shadow: #e5e4e7 0 0 0 3px;
 }
