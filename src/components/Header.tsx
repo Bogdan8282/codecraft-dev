@@ -7,6 +7,7 @@ import {
   SignUpButton,
 } from "@clerk/clerk-react";
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   const { user, isLoaded } = useUser();
@@ -36,7 +37,9 @@ export default function Header() {
   return (
     <header className="border-b">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <div className="font-bold text-xl">CodeCraft</div>
+        <Link to="/">
+          <h2 className="font-bold text-xl">CodeCraft</h2>
+        </Link>
 
         <div className="flex items-center gap-4">
           <SignedOut>
@@ -85,6 +88,15 @@ export default function Header() {
                   </div>
 
                   <div className="py-1">
+                    <button
+                      onClick={() => {
+                        setIsOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-3 hover:bg-gray-900 flex items-center gap-3 text-sm"
+                    >
+                      <Link to="/dashboard">Мої пости</Link>
+                    </button>
+
                     <button
                       onClick={() => {
                         setIsOpen(false);

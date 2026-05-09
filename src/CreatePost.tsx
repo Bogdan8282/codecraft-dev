@@ -6,6 +6,7 @@ import { useAuth } from "@clerk/clerk-react";
 const CreatePost: React.FC = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [imageURL, setImageURL] = useState("");
   const navigate = useNavigate();
 
   const { getToken } = useAuth();
@@ -18,7 +19,7 @@ const CreatePost: React.FC = () => {
 
       await axios.post(
         "http://localhost:5000/api/posts",
-        { title, content },
+        { title, content, imageURL },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -33,14 +34,22 @@ const CreatePost: React.FC = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Створити новий пост</h1>
+    <div className="max-w-2xl mx-auto px-6 py-10 flex flex-col gap-6">
+      <h1 className="text-3xl font-bold">Створити новий пост</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
           placeholder="Заголовок посту"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          required
+          className="w-full p-3 border border-gray-300 rounded-lg text-lg"
+        />
+        <input
+          type="text"
+          placeholder="URL картинки"
+          value={imageURL}
+          onChange={(e) => setImageURL(e.target.value)}
           required
           className="w-full p-3 border border-gray-300 rounded-lg text-lg"
         />

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import type { Post } from "../types";
-import { SignedIn } from "@clerk/clerk-react";
 
 import "./Home.css";
 
@@ -46,17 +45,9 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="w-full mx-auto p-6">
+    <div className="w-full mx-auto px-6 py-10">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-4xl font-bold"></h1>
-        <SignedIn>
-          <Link
-            to="/post/create"
-            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
-          >
-            + Написати пост
-          </Link>
-        </SignedIn>
       </div>
 
       <div className="flex flex-col md:flex-row gap-4 mb-10">
@@ -102,9 +93,7 @@ const Home: React.FC = () => {
           ? posts.map((post) => (
               <Link to={`/post/${post._id}`}>
                 <div key={post._id} className="card">
-                  <Link to={`/post/${post._id}`}>
-                    <h2 className="text-2xl font-semibold">{post.title}</h2>
-                  </Link>
+                  <h2 className="text-2xl font-semibold">{post.title}</h2>
                   <p className="text-md line-clamp-3">
                     {post.content.substring(0, 280)}...
                   </p>

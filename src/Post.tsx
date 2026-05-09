@@ -6,7 +6,7 @@ import type { Comment, Post } from "../types";
 import { useUser } from "@clerk/clerk-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import "./Post.css"
+import "./Post.css";
 
 const SinglePost: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -121,27 +121,52 @@ const SinglePost: React.FC = () => {
   if (!post) return <div className="text-center py-20">Завантаження...</div>;
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
+    <div className="w-full max-w-4xl mx-auto px-6 py-10">
       <Link to="/" className="text-blue-600 hover:underline mb-6 inline-block">
         ← Назад до всіх постів
       </Link>
 
-      <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
-      <p className="text-gray-500 mb-8">
-        {new Date(post.createdAt).toLocaleDateString("uk-UA", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}
-      </p>
-
-      <div className="flex items-center gap-2 mb-8">
+      <div className="flex gap-6 h-fit mb-8">
         <img
-          src={post.author.avatar}
-          alt="avatar"
-          className="w-8 h-8 rounded-full"
+          src={post.imageURL}
+          alt="post_image"
+          className="w-full max-w-[50%] min-h-[200px] rounded-md"
         />
-        <span className="font-medium">{post.author.name}</span>
+
+        <div className="w-full max-w-[50%] flex flex-col gap-4">
+          <h1 className="font-bold">{post.title}</h1>
+
+          <p className="">
+            {new Date(post.createdAt).toLocaleDateString("uk-UA", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </p>
+
+          <div className="flex items-center justify-center gap-4 w-full">
+            <button
+              onClick={() => handleVote("like")}
+              className="flex items-center gap-2 px-4 py-2 bg-green-50 hover:bg-green-100 text-green-700 rounded-lg transition-colors"
+            >
+              <span>👍</span> {likes}
+            </button>
+            <button
+              onClick={() => handleVote("dislike")}
+              className="flex items-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg transition-colors"
+            >
+              <span>👎</span> {dislikes}
+            </button>
+          </div>
+          <div className="flex items-center justify-center gap-2">
+            <img
+              src={post.author.avatar}
+              alt="avatar"
+              className="w-8 h-8 rounded-full"
+            />
+            <span className="font-medium">{post.author.name}</span>
+          </div>
+        </div>
       </div>
 
       <div className="prose max-w-none text-lg leading-relaxed mb-8">
@@ -150,32 +175,18 @@ const SinglePost: React.FC = () => {
         </ReactMarkdown>
       </div>
 
-      <div className="flex items-center gap-4 pt-6 border-t">
-        <button
-          onClick={() => handleVote("like")}
-          className="flex items-center gap-2 px-4 py-2 bg-green-50 hover:bg-green-100 text-green-700 rounded-lg transition-colors"
-        >
-          <span>👍</span> {likes}
-        </button>
-        <button
-          onClick={() => handleVote("dislike")}
-          className="flex items-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg transition-colors"
-        >
-          <span>👎</span> {dislikes}
-        </button>
-      </div>
       <div className="mt-12 border-t pt-8">
         <h2 className="text-2xl font-semibold mb-6">
           Коментарі ({comments.length})
         </h2>
 
         {isSignedIn ? (
-          <form onSubmit={handleAddComment} className="mb-8">
+          <form onSubmit={handleAddComment} className="mb-8 mt-6">
             <textarea
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
               placeholder="Напишіть коментар..."
-              className="w-full p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y min-h-[100px]"
+              className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y min-h-[100px]"
               maxLength={1000}
             />
             <button

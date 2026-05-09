@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import type { Post } from "../types";
-import { useAuth } from "@clerk/clerk-react";
+import { SignedIn, useAuth } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
 
 const Dashboard: React.FC = () => {
@@ -51,28 +51,40 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Мої пости</h1>
-      {posts.length === 0 ? (
-        <p>У вас ще немає постів.</p>
-      ) : (
-        posts.map((post) => (
-          <div
-            key={post._id}
-            className="border p-4 mb-4 rounded flex justify-between items-center"
+    <div className="max-w-4xl w-full mx-auto px-6 py-10">
+      <div className="flex justify-between mb-6">
+        <h1 className="text-3xl font-bold mb-6">Мої пости</h1>
+        <SignedIn>
+          <Link
+            to="/post/create"
+            className="bg-green-600 text-white h-fit px-4 py-2 rounded-lg hover:bg-green-700"
           >
-            <Link to={`/post/${post._id}`}>
-            <h2>{post.title}</h2>
-            </Link>
-            <button
-              onClick={() => handleDelete(post._id)}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            + Написати пост
+          </Link>
+        </SignedIn>
+      </div>
+      <ul className="grid gap-4 grid-cols-1 lg:grid-cols-2">
+        {posts.length === 0 ? (
+          <p>У вас ще немає постів.</p>
+        ) : (
+          posts.map((post) => (
+            <li
+              key={post._id}
+              className="border px-4 py-2 rounded flex justify-between items-center"
             >
-              Видалити
-            </button>
-          </div>
-        ))
-      )}
+              <Link to={`/post/${post._id}`}>
+                <h2>{post.title}</h2>
+              </Link>
+              <button
+                onClick={() => handleDelete(post._id)}
+                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              >
+                Видалити
+              </button>
+            </li>
+          ))
+        )}
+      </ul>
     </div>
   );
 };
