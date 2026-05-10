@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import type { Post } from "../types";
 
-
 import "./Home.css";
 import { Search, SearchCheck, X } from "lucide-react";
 
@@ -97,7 +96,15 @@ const Home: React.FC = () => {
                 <div key={post._id} className="card">
                   <h2 className="text-2xl font-semibold">{post.title}</h2>
                   <p className="text-md line-clamp-3">
-                    {post.content.substring(0, 280)}...
+                    {post.content
+                      .substring(0, 280)
+                      .replace("#### ", "")
+                      .replace("### ", "")
+                      .replace("## ", "")
+                      .replace("# ", "")
+                      .replace("**", "")
+                      .replace("__", "")}
+                    ...
                   </p>
                   <div className="flex justify-between items-center">
                     <div className="flex items-center gap-2">

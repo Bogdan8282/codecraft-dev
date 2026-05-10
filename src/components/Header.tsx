@@ -88,14 +88,16 @@ export default function Header() {
                   </div>
 
                   <div className="py-1">
-                    <button
-                      onClick={() => {
-                        setIsOpen(false);
-                      }}
-                      className="w-full text-left px-4 py-3 hover:bg-gray-900 flex items-center gap-3 text-sm"
-                    >
-                      <Link to="/dashboard">Мої пости</Link>
-                    </button>
+                    <Link to="/dashboard">
+                      <button
+                        onClick={() => {
+                          setIsOpen(false);
+                        }}
+                        className="w-full text-left px-4 py-3 hover:bg-gray-900 flex items-center gap-3 text-sm"
+                      >
+                        Мої пости
+                      </button>
+                    </Link>
 
                     <button
                       onClick={() => {

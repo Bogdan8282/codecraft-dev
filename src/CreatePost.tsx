@@ -50,7 +50,6 @@ const CreatePost: React.FC = () => {
           placeholder="URL картинки"
           value={imageURL}
           onChange={(e) => setImageURL(e.target.value)}
-          required
           className="w-full p-3 border border-gray-300 rounded-lg text-lg"
         />
         <textarea
