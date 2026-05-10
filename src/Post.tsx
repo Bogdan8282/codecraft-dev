@@ -7,6 +7,7 @@ import { useUser } from "@clerk/clerk-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import "./Post.css";
+import { CircleArrowLeft, ThumbsDown, ThumbsUp } from "lucide-react";
 
 const SinglePost: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -122,18 +123,19 @@ const SinglePost: React.FC = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto px-6 py-10">
-      <Link to="/" className="text-blue-600 hover:underline mb-6 inline-block">
-        ← Назад до всіх постів
+      <Link to="/" className="flex gap-2 text-blue-600 hover:text-blue-700 mb-6 justify-center">
+        <CircleArrowLeft />
+        <p>Назад до всіх постів</p>
       </Link>
 
-      <div className="flex gap-6 h-fit mb-8">
+      <div className="flex gap-6 h-fit mb-10 border-b pb-10">
         <img
           src={post.imageURL}
           alt="post_image"
           className="w-full max-w-[50%] min-h-[200px] rounded-md"
         />
 
-        <div className="w-full max-w-[50%] flex flex-col gap-4">
+        <div className="w-full max-w-[50%] flex flex-col gap-4 justify-center items-start">
           <h1 className="font-bold">{post.title}</h1>
 
           <p className="">
@@ -144,18 +146,18 @@ const SinglePost: React.FC = () => {
             })}
           </p>
 
-          <div className="flex items-center justify-center gap-4 w-full">
+          <div className="flex items-center justify-center gap-4">
             <button
               onClick={() => handleVote("like")}
               className="flex items-center gap-2 px-4 py-2 bg-green-50 hover:bg-green-100 text-green-700 rounded-lg transition-colors"
             >
-              <span>👍</span> {likes}
+              <span><ThumbsUp /></span> {likes}
             </button>
             <button
               onClick={() => handleVote("dislike")}
               className="flex items-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg transition-colors"
             >
-              <span>👎</span> {dislikes}
+              <span><ThumbsDown /></span> {dislikes}
             </button>
           </div>
           <div className="flex items-center justify-center gap-2">
@@ -169,19 +171,19 @@ const SinglePost: React.FC = () => {
         </div>
       </div>
 
-      <div className="prose max-w-none text-lg leading-relaxed mb-8">
+      <div className="prose max-w-none text-lg leading-relaxed">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
           {post.content}
         </ReactMarkdown>
       </div>
 
-      <div className="mt-12 border-t pt-8">
-        <h2 className="text-2xl font-semibold mb-6">
+      <div className="mt-10 border-t pt-10 flex flex-col gap-6">
+        <h2 className="text-2xl font-semibold">
           Коментарі ({comments.length})
         </h2>
 
         {isSignedIn ? (
-          <form onSubmit={handleAddComment} className="mb-8 mt-6">
+          <form onSubmit={handleAddComment} className="mb-2">
             <textarea
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
@@ -192,13 +194,13 @@ const SinglePost: React.FC = () => {
             <button
               type="submit"
               disabled={!newComment.trim()}
-              className="mt-3 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+              className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
             >
               Опублікувати коментар
             </button>
           </form>
         ) : (
-          <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg mb-8 text-center">
+          <div className="border border-(--border) p-4 rounded-lg mb-2 text-center">
             Увійдіть, щоб залишати коментарі
           </div>
         )}

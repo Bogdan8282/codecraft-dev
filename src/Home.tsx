@@ -3,7 +3,9 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import type { Post } from "../types";
 
+
 import "./Home.css";
+import { Search, SearchCheck, X } from "lucide-react";
 
 const Home: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -64,7 +66,7 @@ const Home: React.FC = () => {
             disabled={isSearching}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg text-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
           >
-            {isSearching ? "Пошук..." : "Знайти"}
+            {isSearching ? <SearchCheck /> : <Search />}
           </button>
           {searchQuery && (
             <button
@@ -72,7 +74,7 @@ const Home: React.FC = () => {
               onClick={handleReset}
               className="bg-red-500 text-white px-4 py-2 rounded-lg text-lg hover:bg-red-600 transition-colors"
             >
-              X
+              <X />
             </button>
           )}
         </form>
