@@ -51,7 +51,7 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="max-w-4xl w-full mx-auto px-6 py-10">
+    <div className="w-full px-6 py-10">
       <div className="flex justify-between mb-6">
         <h1 className="text-3xl font-bold mb-6">Мої пости</h1>
         <SignedIn>
@@ -63,17 +63,17 @@ const Dashboard: React.FC = () => {
           </Link>
         </SignedIn>
       </div>
-      <ul className="grid gap-4 grid-cols-1 lg:grid-cols-2">
+      <ul className="grid gap-4 grid-cols-1 xl:grid-cols-2">
         {posts.length === 0 ? (
           <p>У вас ще немає постів.</p>
         ) : (
           posts.map((post) => (
             <li
               key={post._id}
-              className="border px-4 py-2 rounded flex justify-between items-center"
+              className="border px-4 py-2 rounded flex justify-between items-center gap-4"
             >
               <Link to={`/post/${post._id}`}>
-                <h2>{post.title}</h2>
+                <h2 className="text-left">{post.title}</h2>
               </Link>
               <button
                 onClick={() => handleDelete(post._id)}

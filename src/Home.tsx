@@ -47,9 +47,9 @@ const Home: React.FC = () => {
 
   return (
     <div className="w-full mx-auto px-6 py-10">
-      <div className="flex justify-between items-center mb-8">
+      {/* <div className="flex justify-between items-center mb-8">
         <h1 className="text-4xl font-bold"></h1>
-      </div>
+      </div> */}
 
       <div className="flex flex-col md:flex-row gap-4 mb-10">
         <form onSubmit={handleSearch} className="flex flex-1 gap-4">
@@ -81,7 +81,7 @@ const Home: React.FC = () => {
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
-          className="px-2 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-800 text-white cursor-pointer"
+          className="filter-select focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
         >
           <option value="newest">Найновіші</option>
           <option value="popular">Найпопулярніші</option>
@@ -94,7 +94,9 @@ const Home: React.FC = () => {
           ? posts.map((post) => (
               <Link to={`/post/${post._id}`}>
                 <div key={post._id} className="card">
-                  <h2 className="text-2xl font-semibold">{post.title}</h2>
+                  <h2 className="font-semibold">
+                    {post.title.substring(0, 80)}
+                  </h2>
                   <p className="text-md line-clamp-3">
                     {post.content
                       .substring(0, 280)

@@ -5,6 +5,7 @@ import { useAuth } from "@clerk/clerk-react";
 import type { Comment, Post } from "../types";
 import { useUser } from "@clerk/clerk-react";
 import ReactMarkdown from "react-markdown";
+import remarkBreaks from 'remark-breaks'
 import remarkGfm from "remark-gfm";
 import "./Post.css";
 import { CircleArrowLeft, ThumbsDown, ThumbsUp } from "lucide-react";
@@ -136,7 +137,7 @@ const SinglePost: React.FC = () => {
         />
 
         <div className="w-full max-w-[50%] flex flex-col gap-4 justify-center items-start">
-          <h1 className="font-bold">{post.title}</h1>
+          <h1 className="font-bold text-left">{post.title}</h1>
 
           <p className="">
             {new Date(post.createdAt).toLocaleDateString("uk-UA", {
@@ -172,7 +173,7 @@ const SinglePost: React.FC = () => {
       </div>
 
       <div className="prose max-w-none text-lg leading-relaxed">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
           {post.content}
         </ReactMarkdown>
       </div>

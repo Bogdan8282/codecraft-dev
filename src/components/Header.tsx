@@ -38,19 +38,19 @@ export default function Header() {
     <header className="border-b border-(--border)">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link to="/">
-          <h2 className="font-bold text-xl">CodeCraft</h2>
+          <h1>CodeCraft</h1>
         </Link>
 
         <div className="flex items-center gap-4">
           <SignedOut>
             <SignInButton mode="modal">
-              <button className="px-5 py-2 text-sm text-white font-medium border rounded-lg hover:bg-gray-800">
+              <button className="px-5 py-2 text-sm dark:text-white font-medium border rounded-lg hover:text-white hover:bg-gray-900 dark:hover:bg-gray-950">
                 Увійти
               </button>
             </SignInButton>
 
             <SignUpButton mode="modal">
-              <button className="px-5 py-2 text-sm font-medium bg-white text-black rounded-lg hover:bg-gray-300">
+              <button className="px-5 py-2 text-sm font-medium bg-(--text-h) dark:bg-white text-white dark:text-black rounded-lg hover:opacity-80 dark:hover:bg-gray-300">
                 Зареєструватися
               </button>
             </SignUpButton>
