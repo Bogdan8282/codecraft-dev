@@ -5,7 +5,6 @@ import { useAuth } from "@clerk/clerk-react";
 import type { Comment, Post } from "../types";
 import { useUser } from "@clerk/clerk-react";
 import ReactMarkdown from "react-markdown";
-import remarkBreaks from 'remark-breaks'
 import remarkGfm from "remark-gfm";
 import "./Post.css";
 import { CircleArrowLeft, ThumbsDown, ThumbsUp } from "lucide-react";
@@ -173,7 +172,7 @@ const SinglePost: React.FC = () => {
       </div>
 
       <div className="prose max-w-none text-lg leading-relaxed">
-        <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
           {post.content}
         </ReactMarkdown>
       </div>
