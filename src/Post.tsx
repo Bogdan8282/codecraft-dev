@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
 import type { Comment, Post } from "../types";
@@ -8,10 +7,11 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import "./Post.css";
 import { CircleArrowLeft, ThumbsDown, ThumbsUp } from "lucide-react";
+import { useApi } from "./hooks/useApi";
 
 const SinglePost: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { isSignedIn, getToken } = useAuth();
+  const { isSignedIn } = useAuth();
 
   const [post, setPost] = useState<Post | null>(null);
   const [likes, setLikes] = useState<number>(0);
@@ -23,10 +23,12 @@ const SinglePost: React.FC = () => {
 
   const { user } = useUser();
 
+  const api = useApi();
+
   useEffect(() => {
     if (id) {
-      axios
-        .get(`http://localhost:5000/api/posts/${id}`)
+      api
+        .get(`/posts/${id}`)
         .then((res) => {
           setPost(res.data);
           setLikes(res.data.likes?.length || 0);
@@ -34,44 +36,33 @@ const SinglePost: React.FC = () => {
         })
         .catch((err) => console.error(err));
     }
-  }, [id]);
+  }, [id, api]);
 
   const fetchComments = useCallback(async () => {
     if (!id) return;
     setLoadingComments(true);
     try {
-      const res = await axios.get(
-        `http://localhost:5000/api/posts/${id}/comments`,
-      );
+      const res = await api.get(`/posts/${id}/comments`);
       setComments(res.data);
     } catch (err) {
       console.error("Помилка завантаження коментарів:", err);
     } finally {
       setLoadingComments(false);
     }
-  }, [id]);
+  }, [id, api]);
 
   useEffect(() => {
     fetchComments();
   }, [fetchComments]);
 
   const handleVote = async (type: "like" | "dislike") => {
-    const token = await getToken();
     if (!isSignedIn) {
       alert("Будь ласка, увійдіть, щоб оцінити пост");
       return;
     }
 
     try {
-      const res = await axios.post(
-        `http://localhost:5000/api/posts/${id}/vote`,
-        { type },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+      const res = await api.post(`/posts/${id}/vote`, { type });
       setLikes(res.data.likes);
       setDislikes(res.data.dislikes);
     } catch (err) {
@@ -83,13 +74,8 @@ const SinglePost: React.FC = () => {
     e.preventDefault();
     if (!newComment.trim() || !isSignedIn) return;
 
-    const token = await getToken();
     try {
-      await axios.post(
-        `http://localhost:5000/api/posts/${id}/comments`,
-        { content: newComment },
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
+      await api.post(`/posts/${id}/comments`, { content: newComment });
 
       setNewComment("");
       fetchComments();
@@ -100,18 +86,10 @@ const SinglePost: React.FC = () => {
   };
 
   const handleDeleteComment = async (commentId: string) => {
-    const token = await getToken();
     if (!isSignedIn) return;
 
     try {
-      await axios.delete(
-        `http://localhost:5000/api/posts/comment/${commentId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+      await api.delete(`/posts/comment/${commentId}`);
 
       fetchComments();
     } catch (err) {
@@ -123,7 +101,10 @@ const SinglePost: React.FC = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto px-6 py-10">
-      <Link to="/" className="flex gap-2 text-blue-600 hover:text-blue-700 mb-6 justify-center">
+      <Link
+        to="/"
+        className="flex gap-2 text-blue-600 hover:text-blue-700 mb-6 justify-center"
+      >
         <CircleArrowLeft />
         <p>Назад до всіх постів</p>
       </Link>
@@ -151,13 +132,19 @@ const SinglePost: React.FC = () => {
               onClick={() => handleVote("like")}
               className="flex items-center gap-2 px-4 py-2 not-dark:bg-green-700 not-dark:hover:bg-green-800 not-dark:text-green-100 dark:bg-green-50 dark:hover:bg-green-100 dark:text-green-700 rounded-lg transition-colors"
             >
-              <span><ThumbsUp /></span> {likes}
+              <span>
+                <ThumbsUp />
+              </span>{" "}
+              {likes}
             </button>
             <button
               onClick={() => handleVote("dislike")}
               className="flex items-center gap-2 px-4 py-2 not-dark:bg-red-700 not-dark:hover:bg-red-800 not-dark:text-red-100 dark:bg-red-50 dark:hover:bg-red-100 dark:text-red-700 rounded-lg transition-colors"
             >
-              <span><ThumbsDown /></span> {dislikes}
+              <span>
+                <ThumbsDown />
+              </span>{" "}
+              {dislikes}
             </button>
           </div>
           <div className="flex items-center justify-center gap-2">

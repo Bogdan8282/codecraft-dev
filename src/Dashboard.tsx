@@ -1,22 +1,17 @@
 import React, { useState } from "react";
-import axios from "axios";
 import type { Post } from "../types";
-import { SignedIn, useAuth } from "@clerk/clerk-react";
+import { SignedIn } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
+import { useApi } from "./hooks/useApi";
 
 const Dashboard: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const { getToken } = useAuth();
+  const api = useApi();
 
   const fetchPosts = async () => {
     try {
-      const token = await getToken();
-      const res = await axios.get("http://localhost:5000/api/posts/dashboard", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await api.get("/posts/dashboard");
       setPosts(res.data);
     } catch (err) {
       console.error("Помилка завантаження постів:", err);
@@ -32,12 +27,7 @@ const Dashboard: React.FC = () => {
   const handleDelete = async (id: string) => {
     if (window.confirm("Ви впевнені, що хочете видалити цей пост?")) {
       try {
-        const token = await getToken();
-        await axios.delete(`http://localhost:5000/api/posts/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        await api.delete(`/posts/${id}`);
         setPosts((prevPosts) => prevPosts.filter((p) => p._id !== id));
       } catch (err) {
         alert("Помилка при видаленні");

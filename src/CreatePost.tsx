@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@clerk/clerk-react";
+import { useApi } from "./hooks/useApi";
 
 const CreatePost: React.FC = () => {
   const [title, setTitle] = useState("");
@@ -9,23 +8,18 @@ const CreatePost: React.FC = () => {
   const [imageURL, setImageURL] = useState("");
   const navigate = useNavigate();
 
-  const { getToken } = useAuth();
+  const api = useApi();
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const token = await getToken();
-      console.log("TOKEN:", token);
 
-      await axios.post(
-        "http://localhost:5000/api/posts",
-        { title, content, imageURL },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+      await api.post("/posts", { 
+        title, 
+        content, 
+        imageURL 
+      });
+
       navigate("/");
     } catch (err) {
       console.error(err);

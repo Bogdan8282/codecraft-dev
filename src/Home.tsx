@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import type { Post } from "../types";
-
-import "./Home.css";
 import { Search, SearchCheck, X } from "lucide-react";
+import { useApi } from "./hooks/useApi";
+import "./Home.css";
 
 const Home: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -13,22 +12,27 @@ const Home: React.FC = () => {
 
   const [sortBy, setSortBy] = useState("newest");
 
-  const fetchPosts = async (query = searchQuery, sort = sortBy) => {
-    setIsSearching(true);
-    try {
-      const params = new URLSearchParams();
-      if (query) params.append("search", query);
-      if (sort) params.append("sort", sort);
+  const api = useApi();
 
-      const url = `http://localhost:5000/api/posts?${params.toString()}`;
-      const res = await axios.get(url);
-      setPosts(res.data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsSearching(false);
-    }
-  };
+  const fetchPosts = useCallback(
+    async (query = searchQuery, sort = sortBy) => {
+      setIsSearching(true);
+      try {
+        const res = await api.get("/posts", {
+          params: {
+            search: query || undefined,
+            sort: sort,
+          },
+        });
+        setPosts(res.data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsSearching(false);
+      }
+    },
+    [api, searchQuery, sortBy],
+  );
 
   useEffect(() => {
     fetchPosts(searchQuery, sortBy);
@@ -47,10 +51,6 @@ const Home: React.FC = () => {
 
   return (
     <div className="w-full mx-auto px-6 py-10">
-      {/* <div className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-bold"></h1>
-      </div> */}
-
       <div className="flex flex-col md:flex-row gap-4 mb-10">
         <form onSubmit={handleSearch} className="flex flex-1 gap-4">
           <input
@@ -92,8 +92,8 @@ const Home: React.FC = () => {
       <div className="card-container">
         {posts.length > 0
           ? posts.map((post) => (
-              <Link to={`/post/${post._id}`}>
-                <div key={post._id} className="card">
+              <Link key={post._id} to={`/post/${post._id}`}>
+                <div className="card">
                   <h2 className="font-semibold">
                     {post.title.substring(0, 80)}
                   </h2>
