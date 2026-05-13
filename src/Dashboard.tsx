@@ -65,7 +65,7 @@ const Dashboard: React.FC = () => {
       </div>
       <ul className="grid gap-4 grid-cols-1 xl:grid-cols-2">
         {posts.length === 0 ? (
-          <p>У вас ще немає постів.</p>
+          <p className="text-left text-lg">У вас ще немає постів...</p>
         ) : (
           posts.map((post) => (
             <li

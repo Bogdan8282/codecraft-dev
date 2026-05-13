@@ -81,7 +81,7 @@ const Home: React.FC = () => {
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
-          className="filter-select focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+          className="filter-select border focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
         >
           <option value="newest">Найновіші</option>
           <option value="popular">Найпопулярніші</option>

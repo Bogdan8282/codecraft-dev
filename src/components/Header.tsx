@@ -60,7 +60,7 @@ export default function Header() {
             <div className="relative" ref={menuRef}>
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center gap-3 rounded-full transition-all white-glow"
+                className="flex items-center gap-3 rounded-full transition-all frame"
               >
                 <img
                   src={user?.imageUrl}
@@ -70,8 +70,8 @@ export default function Header() {
               </button>
 
               {isOpen && (
-                <div className="absolute right-0 mt-2 w-72 bg-[#030412] rounded-2xl shadow-xl border border-gray-700 py-2 z-50 overflow-hidden">
-                  <div className="px-4 py-4 border-b flex gap-3">
+                <div className="absolute right-0 mt-2 w-72 not-dark:bg-(--bg) dark:bg-[#030412] rounded-2xl shadow-xl border not-dark:border-gray-400 dark:border-gray-700 py-2 z-50 overflow-hidden">
+                  <div className="px-4 py-4 border-b not-dark:border-gray-400 dark:border-gray-700 flex gap-3">
                     <img
                       src={user?.imageUrl}
                       alt=""
@@ -93,7 +93,7 @@ export default function Header() {
                         onClick={() => {
                           setIsOpen(false);
                         }}
-                        className="w-full text-left px-4 py-3 hover:bg-gray-900 flex items-center gap-3 text-sm"
+                        className="w-full text-left px-4 py-3 not-dark:hover:bg-gray-200 dark:hover:bg-gray-900 flex items-center gap-3 text-sm"
                       >
                         Мої пости
                       </button>
@@ -104,7 +104,7 @@ export default function Header() {
                         setIsOpen(false);
                         openUserProfile();
                       }}
-                      className="w-full text-left px-4 py-3 hover:bg-gray-900 flex items-center gap-3 text-sm"
+                      className="w-full text-left px-4 py-3 not-dark:hover:bg-gray-200 dark:hover:bg-gray-900 flex items-center gap-3 text-sm"
                     >
                       Управління акаунтом
                     </button>
@@ -114,7 +114,7 @@ export default function Header() {
                         setIsOpen(false);
                         signOut({ redirectUrl: "/" });
                       }}
-                      className="w-full text-left px-4 py-3 hover:bg-gray-900 flex items-center gap-3 text-sm text-red-600"
+                      className="w-full text-left px-4 py-3 not-dark:hover:bg-gray-200 dark:hover:bg-gray-900 flex items-center gap-3 text-sm text-red-600"
                     >
                       Вийти з акаунту
                     </button>

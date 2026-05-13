@@ -149,13 +149,13 @@ const SinglePost: React.FC = () => {
           <div className="flex items-center justify-center gap-4">
             <button
               onClick={() => handleVote("like")}
-              className="flex items-center gap-2 px-4 py-2 bg-green-50 hover:bg-green-100 text-green-700 rounded-lg transition-colors"
+              className="flex items-center gap-2 px-4 py-2 not-dark:bg-green-700 not-dark:hover:bg-green-800 not-dark:text-green-100 dark:bg-green-50 dark:hover:bg-green-100 dark:text-green-700 rounded-lg transition-colors"
             >
               <span><ThumbsUp /></span> {likes}
             </button>
             <button
               onClick={() => handleVote("dislike")}
-              className="flex items-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg transition-colors"
+              className="flex items-center gap-2 px-4 py-2 not-dark:bg-red-700 not-dark:hover:bg-red-800 not-dark:text-red-100 dark:bg-red-50 dark:hover:bg-red-100 dark:text-red-700 rounded-lg transition-colors"
             >
               <span><ThumbsDown /></span> {dislikes}
             </button>

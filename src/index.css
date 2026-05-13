@@ -3,8 +3,8 @@
 :root {
   --text: #494352;
   --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
+  --bg: #ffffff;
+  --border: #dedde1;
   --code-bg: #f4f3ec;
   --accent: #aa3bff;
   --accent-bg: rgba(170, 59, 255, 0.1);
@@ -13,8 +13,8 @@
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
+  --heading: system-ui, "Segoe UI", Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
@@ -37,7 +37,7 @@
     --text: #cbced5;
     --text-h: #f3f4f6;
     --bg: #23232e;
-    --border: #2e303a;
+    --border: #32343e;
     --code-bg: #1f2028;
     --accent: #c084fc;
     --accent-bg: rgba(192, 132, 252, 0.15);
@@ -110,14 +110,22 @@ code {
   background: var(--code-bg);
 }
 
-.cl-internal-1k7jtru, .cl-internal-1fpq5at {
+.cl-internal-1k7jtru,
+.cl-internal-1fpq5at {
   display: none;
 }
 
-button, a {
+button,
+a {
   cursor: pointer;
 }
 
-.white-glow:hover {
-  box-shadow: #e5e4e7 0 0 0 3px;
+.frame:hover {
+  box-shadow: #d4d4d7 0 0 0 3px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .frame:hover {
+    box-shadow: var(--text-h) 0 0 0 3px;
+  }
 }
