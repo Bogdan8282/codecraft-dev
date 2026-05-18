@@ -49,6 +49,13 @@ const Home: React.FC = () => {
     fetchPosts("", sortBy);
   };
 
+  const stripMarkdown = (text: string) => {
+    return text
+      .replace(/[#*`~_]/g, "")
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+      .trim();
+  };
+
   return (
     <div className="w-full mx-auto px-6 py-10">
       <div className="flex flex-col md:flex-row gap-4 mb-10">
@@ -98,15 +105,7 @@ const Home: React.FC = () => {
                     {post.title.substring(0, 80)}
                   </h2>
                   <p className="text-md line-clamp-3">
-                    {post.content
-                      .substring(0, 280)
-                      .replace("#### ", "")
-                      .replace("### ", "")
-                      .replace("## ", "")
-                      .replace("# ", "")
-                      .replace("**", "")
-                      .replace("__", "")}
-                    ...
+                    {stripMarkdown(post.content.substring(0, 280))}...
                   </p>
                   <div className="flex justify-between items-center">
                     <div className="flex items-center gap-2">
