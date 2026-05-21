@@ -124,6 +124,17 @@ a {
   box-shadow: #d4d4d7 0 0 0 3px;
 }
 
+main {
+  width: 100%;
+  padding-inline: calc(var(--spacing) * 6);
+  padding-block: calc(var(--spacing) * 10);
+  margin-inline: auto;
+}
+
+img {
+  object-fit: cover;
+}
+
 @media (prefers-color-scheme: dark) {
   .frame:hover {
     box-shadow: var(--text-h) 0 0 0 3px;

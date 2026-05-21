@@ -6,6 +6,7 @@ import Post from "./Post.tsx";
 import Dashboard from "./Dashboard.tsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.tsx";
 import CreatePost from "./CreatePost";
+import ContactUs from "./ContactUs.tsx";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/contact" element={<ContactUs />} />
         <Route path="/post/:id" element={<Post />} />
         <Route
           path="/post/create"
