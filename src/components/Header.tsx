@@ -36,7 +36,7 @@ export default function Header() {
 
   return (
     <header className="border-b border-(--border)">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="mx-auto px-6 py-4 flex items-center justify-between">
         <Link to="/">
           <h1>CodeCraft</h1>
         </Link>

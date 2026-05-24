@@ -7,6 +7,7 @@ import Dashboard from "./Dashboard.tsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.tsx";
 import CreatePost from "./CreatePost";
 import ContactUs from "./ContactUs.tsx";
+import Footer from "./components/Footer.tsx";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           }
         />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
