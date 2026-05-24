@@ -44,13 +44,13 @@ export default function Header() {
         <div className="flex items-center gap-4">
           <SignedOut>
             <SignInButton mode="modal">
-              <button className="px-5 py-2 text-sm dark:text-white font-medium border rounded-lg hover:text-white hover:bg-gray-900 dark:hover:bg-gray-950">
+              <button className="px-5 py-2 text-sm dark:text-white font-medium border rounded-lg hover:border-black hover:text-white hover:bg-gray-900 dark:hover:bg-gray-950 transition duration-300">
                 Увійти
               </button>
             </SignInButton>
 
             <SignUpButton mode="modal">
-              <button className="px-5 py-2 text-sm font-medium bg-(--text-h) dark:bg-white text-white dark:text-black rounded-lg hover:opacity-80 dark:hover:bg-gray-300">
+              <button className="btn-hover-effect px-5 py-2 text-sm font-medium bg-(--text-h) dark:bg-white text-white dark:text-black rounded-lg">
                 Зареєструватися
               </button>
             </SignUpButton>

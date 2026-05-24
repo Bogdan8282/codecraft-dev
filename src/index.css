@@ -135,8 +135,34 @@ img {
   object-fit: cover;
 }
 
+.btn-hover-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-hover-effect:before {
+  content: "";
+  position: absolute;
+  height: 160px;
+  width: 50px;
+  background: #fff;
+  /* filter: blur(20px); */
+  right: -70px;
+  top: -40px;
+  transform: rotate(20deg);
+  transition: all 0.5s;
+  opacity: 0.3;
+}
+
+.btn-hover-effect:hover:before {
+  right: 125%;
+}
+
 @media (prefers-color-scheme: dark) {
   .frame:hover {
     box-shadow: var(--text-h) 0 0 0 3px;
+  }
+  .btn-hover-effect:before {
+    background: #000;
   }
 }
