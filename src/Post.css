@@ -32,3 +32,7 @@
 .prose hr {
     margin-block: 30px;
 }
+
+tr td, tr th {
+        padding-inline: 0.5rem;
+}

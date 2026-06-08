@@ -19,7 +19,7 @@
   max-width: 100%;
   overflow-wrap: break-word;
   word-break: break-word;
-  transition: linear 0.1s;
+  transition: all .2s ease-out;
 }
 
 .card:hover {

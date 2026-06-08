@@ -149,8 +149,8 @@ img {
   right: -70px;
   top: -40px;
   transform: rotate(20deg);
-  transition: all 0.5s;
-  opacity: 0.3;
+  transition: all 0.4s;
+  opacity: 0.2;
 }
 
 .btn-hover-effect:hover:before {
@@ -161,7 +161,49 @@ img {
   .frame:hover {
     box-shadow: var(--text-h) 0 0 0 3px;
   }
+
   .btn-hover-effect:before {
     background: #000;
+  }
+
+  .cl-internal-15hkgn2 {
+    background: none;
+  }
+
+  .cl-internal-pe6vm4 {
+    display: none;
+  }
+
+  .cl-internal-1pcqqbp,
+  .cl-internal-l2l775,
+  .cl-internal-1km134l,
+  .cl-internal-1x28sfr,
+  .cl-internal-1jpib5j {
+    background: var(--code-bg);
+  }
+
+  .cl-internal-1pcqqbp *,
+  .cl-internal-1x28sfr *,
+  .cl-internal-1xuu4jk * {
+    color: var(--text-h);
+  }
+
+  .cl-pageScrollBox {
+    background-color: var(--bg);
+  }
+
+  .cl-pageScrollBox * {
+    color: var(--text-h);
+  }
+
+  .cl-pageScrollBox button,
+  .cl-internal-1ctfnds {
+    background-color: #494352;
+  }
+
+  .cl-pageScrollBox button:hover,
+  .cl-internal-1ctfnds:hover {
+    color: var(--text-h);
+    background-color: #32343e;
   }
 }
