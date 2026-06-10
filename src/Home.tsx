@@ -12,41 +12,71 @@ const Home: React.FC = () => {
 
   const [sortBy, setSortBy] = useState("newest");
 
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(false);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+
   const api = useApi();
 
   const fetchPosts = useCallback(
-    async (query = searchQuery, sort = sortBy) => {
-      setIsSearching(true);
+    async (
+      query = searchQuery,
+      sort = sortBy,
+      targetPage = 1,
+      append = false,
+    ) => {
+      if (append) {
+        setIsLoadingMore(true);
+      } else {
+        setIsSearching(true);
+      }
       try {
         const res = await api.get("/posts", {
           params: {
             search: query || undefined,
             sort: sort,
+            page: targetPage,
+            limit: 9,
           },
         });
-        setPosts(res.data);
+        const { posts: fetchedPosts, hasMore: fetchedHasMore } = res.data;
+
+        if (append) {
+          setPosts((prev) => [...prev, ...fetchedPosts]);
+        } else {
+          setPosts(fetchedPosts);
+        }
+
+        setHasMore(fetchedHasMore);
+        setPage(targetPage);
       } catch (err) {
         console.error(err);
       } finally {
         setIsSearching(false);
+        setIsLoadingMore(false);
       }
     },
     [api, searchQuery, sortBy],
   );
 
   useEffect(() => {
-    fetchPosts(searchQuery, sortBy);
+    fetchPosts(searchQuery, sortBy, 1, false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortBy]);
 
   const handleSearch = (e: React.SubmitEvent) => {
     e.preventDefault();
-    fetchPosts(searchQuery, sortBy);
+    fetchPosts(searchQuery, sortBy, 1, false);
   };
 
   const handleReset = () => {
     setSearchQuery("");
-    fetchPosts("", sortBy);
+    fetchPosts("", sortBy, 1, false);
+  };
+
+  const loadMorePosts = () => {
+    const nextPage = page + 1;
+    fetchPosts(searchQuery, sortBy, nextPage, true);
   };
 
   const stripMarkdown = (text: string) => {
@@ -98,33 +128,47 @@ const Home: React.FC = () => {
 
       <div className="card-container">
         {isSearching ? (
-    <div>Завантаження...</div>) : posts.length > 0 ? ( posts.map((post) => (
-              <Link key={post._id} to={`/post/${post._id}`}>
-                <div className="card">
-                  <h2 className="font-semibold">
-                    {post.title.substring(0, 80)}
-                  </h2>
-                  <p className="text-md line-clamp-3">
-                    {stripMarkdown(post.content.substring(0, 280))}...
-                  </p>
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-2">
-                      <img
-                        src={post.author.avatar}
-                        alt="avatar"
-                        className="w-6 h-6 rounded-full"
-                      />
-                      <span className="text-sm">{post.author.name}</span>
-                    </div>
-                    <p className="text-sm">
-                      {new Date(post.createdAt).toLocaleDateString("uk-UA")}
-                    </p>
+          <div>Завантаження...</div>
+        ) : posts.length > 0 ? (
+          posts.map((post) => (
+            <Link key={post._id} to={`/post/${post._id}`}>
+              <div className="card">
+                <h2 className="font-semibold">{post.title.substring(0, 80)}</h2>
+                <p className="text-md line-clamp-3">
+                  {stripMarkdown(post.content.substring(0, 280))}...
+                </p>
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={post.author.avatar}
+                      alt="avatar"
+                      className="w-6 h-6 rounded-full"
+                    />
+                    <span className="text-sm">{post.author.name}</span>
                   </div>
+                  <p className="text-sm">
+                    {new Date(post.createdAt).toLocaleDateString("uk-UA")}
+                  </p>
                 </div>
-              </Link>
-            ))
-          ): ("За вашим запитом нічого не знайдено...")}
+              </div>
+            </Link>
+          ))
+        ) : (
+          "За вашим запитом нічого не знайдено..."
+        )}
       </div>
+
+      {hasMore && !isSearching && (
+        <div className="flex justify-center mt-6">
+          <button
+            onClick={loadMorePosts}
+            disabled={isLoadingMore}
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg text-lg hover:bg-blue-700 disabled:opacity-50 transition-colors shadow-md"
+          >
+            {isLoadingMore ? "Завантаження..." : "Завантажити ще"}
+          </button>
+        </div>
+      )}
     </div>
   );
 };
