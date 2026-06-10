@@ -97,8 +97,8 @@ const Home: React.FC = () => {
       </div>
 
       <div className="card-container">
-        {posts.length > 0
-          ? posts.map((post) => (
+        {isSearching ? (
+    <div>Завантаження...</div>) : posts.length > 0 ? ( posts.map((post) => (
               <Link key={post._id} to={`/post/${post._id}`}>
                 <div className="card">
                   <h2 className="font-semibold">
@@ -123,7 +123,7 @@ const Home: React.FC = () => {
                 </div>
               </Link>
             ))
-          : "За вашим запитом нічого не знайдено..."}
+          ): ("За вашим запитом нічого не знайдено...")}
       </div>
     </div>
   );
