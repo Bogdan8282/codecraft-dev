@@ -39,7 +39,7 @@ const Home: React.FC = () => {
             limit: 9,
           },
         });
-        const { posts: fetchedPosts, hasMore: fetchedHasMore } = res.data;
+        const { posts: fetchedPosts = [], hasMore: fetchedHasMore = false } = res.data || {};
 
         if (append) {
           setPosts((prev) => [...prev, ...fetchedPosts]);
