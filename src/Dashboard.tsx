@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { Post } from "../types";
 import { SignedIn } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
@@ -20,9 +20,9 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  if (loading && posts.length === 0) {
+  useEffect(() => {
     fetchPosts();
-  }
+  }, []);
 
   const handleDelete = async (id: string) => {
     if (window.confirm("Ви впевнені, що хочете видалити цей пост?")) {
