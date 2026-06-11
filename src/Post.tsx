@@ -3,8 +3,6 @@ import { useParams, Link } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
 import type { Comment, Post } from "../types";
 import { useUser } from "@clerk/clerk-react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import "./Post.css";
 import { CircleArrowLeft, ThumbsDown, ThumbsUp } from "lucide-react";
 import { useApi } from "./hooks/useApi";
@@ -158,11 +156,10 @@ const SinglePost: React.FC = () => {
         </div>
       </div>
 
-      <div className="prose max-w-none text-lg leading-relaxed">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
-          {post.content}
-        </ReactMarkdown>
-      </div>
+      <div
+        className="tiptap-content leading-relaxed"
+        dangerouslySetInnerHTML={{ __html: post.content }}
+      />
 
       <div className="mt-10 border-t pt-10 flex flex-col gap-6">
         <h2 className="text-2xl font-semibold">
