@@ -17,8 +17,8 @@ const ToolbarButton: React.FC<{
     onClick={onClick}
     className={`px-2 py-1 rounded text-sm font-medium transition-colors ${
       active
-        ? "bg-blue-100 text-blue-700 border border-blue-300"
-        : "text-gray-600 hover:bg-gray-100 border border-transparent"
+        ? "text-blue-700 border border-blue-300"
+        : "not-dark:text-gray-600 dark:text-gray-100 not-dark:hover:bg-gray-200 dark:hover:bg-gray-900 border border-transparent"
     }`}
   >
     {children}
@@ -81,7 +81,7 @@ const CreatePost: React.FC = () => {
           className="w-full p-3 border border-gray-300 rounded-lg text-lg"
         />
         <div className="border border-gray-300 rounded-lg overflow-hidden">
-          <div className="flex flex-wrap gap-1 p-2 border-b border-gray-200 bg-gray-50">
+          <div className="flex flex-wrap gap-1 p-2 border-b border-gray-200 dark:bg-[#030412] not-dark:bg-gray-50">
             <ToolbarButton
               title="Жирний (Ctrl+B)"
               onClick={() => editor.chain().focus().toggleBold().run()}
