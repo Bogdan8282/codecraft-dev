@@ -2,7 +2,7 @@
 
 /* Стилі для TipTap редактора і відображення постів */
 
-@layer base {
+@layer components {
   .tiptap-content h1 {
     font-size: 2em;
     font-weight: bold;
