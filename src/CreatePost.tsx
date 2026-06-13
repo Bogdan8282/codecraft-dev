@@ -4,6 +4,7 @@ import { useApi } from "./hooks/useApi";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
+import "./TipTap.css";
 
 const ToolbarButton: React.FC<{
   onClick: () => void;
@@ -188,7 +189,7 @@ const CreatePost: React.FC = () => {
             </ToolbarButton>
           </div>
 
-          <EditorContent editor={editor} />
+          <EditorContent editor={editor} className="tiptap-content" />
         </div>
         <button
           type="submit"
