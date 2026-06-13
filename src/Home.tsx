@@ -82,8 +82,10 @@ const Home: React.FC = () => {
 
   const stripHTML = (text: string) => {
     return text
+      .replace(/<\/[^>]+>/g, " ")
       .replace(/<[^>]*>/g, "")
       .replace(/&nbsp;/g, " ")
+      .replace(/\s+/g, " ")
       .trim();
   };
 
